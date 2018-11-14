@@ -7,7 +7,16 @@ driver:
 lint:
   name: yamllint
   options:
-    config-file: .yamllint
+    config-data:
+      extends: relaxed
+      rules:
+        braces:
+          max-spaces-inside: 1
+          level: error
+        brackets:
+          max-spaces-inside: 1
+          level: error
+        line-length: disable
 
 platforms:
   - name: centos-vagrant
@@ -17,9 +26,10 @@ platforms:
 
 provisioner:
   name: ansible
-  log: true
   lint:
     name: ansible-lint
+  log: true
+
   config_options:
     defaults:
       remote_tmp: /tmp/.ansible
