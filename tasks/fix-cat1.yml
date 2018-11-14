@@ -1,7 +1,8 @@
 ---
 - block:
       - name: "HIGH | RHEL-07-010010 | AUDIT | The file permissions, ownership, and group membership of system files and commands must match the vendor values."
-        shell: 'rpm -Va --nolinkto --nofiledigest --nosize --nomtime --nodigest --nosignature | grep -E ''^(.M|.....U|......G)'' | tee /dev/stderr | cut -c13- | sed ''s/^ //'' | xargs rpm -qf --qf=''%{name}\n'' | sort -u'
+        shell: |
+            rpm -Va --nolinkto --nofiledigest --nosize --nomtime --nodigest --nosignature | grep -E '^(.M|.....U|......G)' | tee /dev/stderr | cut -c13- | sed 's/^ //' | xargs rpm -qf --qf='%{name}\n' | sort -u
         args:
             warn: no
         check_mode: no
@@ -69,10 +70,13 @@
 
 - name: "HIGH | RHEL-07-010290 | PATCH | The system must not have accounts configured with blank or null passwords."
   replace:
-      dest: /etc/pam.d/system-auth
+      dest: "{{ item }}"
       follow: true
       regexp: 'nullok ?'
   when: rhel_07_010290
+  with_items:
+      - /etc/pam.d/system-auth
+      - /etc/pam.d/password-auth
   tags:
       - RHEL-07-010290
 
@@ -173,21 +177,6 @@
   when: rhel_07_020060
   tags:
       - RHEL-07-020060
-      - yum
-
-- name: "HIGH | RHEL-07-020070 | PATCH | The operating system must prevent the installation of software, patches, service packs, device drivers, or operating system components of packages without verification of the repository metadata."
-  lineinfile:
-      dest: /etc/yum.conf
-      regexp: ^repo_gpgcheck
-      line: repo_gpgcheck=1
-      insertafter: '\[main\]'
-  check_mode: "{{ rhel7stig_disruptive_check_mode }}"
-  when:
-      - rhel_07_020070
-      - rhel7stig_disruptive
-  tags:
-      - RHEL-07-020070
-      - disruption-high
       - yum
 
 - name: |

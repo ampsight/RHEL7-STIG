@@ -3,6 +3,7 @@ driver:
   name: vagrant
   provider:
     name: virtualbox
+
 lint:
   name: yamllint
   options:
@@ -16,20 +17,24 @@ lint:
           max-spaces-inside: 1
           level: error
         line-length: disable
+
 platforms:
   - name: centos-vagrant
     box: centos/7
   - name: rhel-vagrant
     box: rhel7
+
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
   log: true
+
   config_options:
     defaults:
       remote_tmp: /tmp/.ansible
       retry_files_enabled: false
+
 scenario:
   name: vagrant
   test_sequence:
@@ -44,6 +49,7 @@ scenario:
     - side_effect
     - verify
     - destroy
+
 verifier:
   name: testinfra
   lint:

@@ -4,7 +4,11 @@
   pre_tasks:
     - name: install packages for testing under docker
       yum:
-        name: "{{ item }}"
+        name:
+          - selinux-policy
+          - libselinux-python
+          - openssh-server
+          - which
         state: present
       with_items:
         - selinux-policy
@@ -12,13 +16,13 @@
         - openssh-server
         - which
 
+
     - name: Generate hostkey
       systemd:
         name: sshd
         state: started
         enabled: true
-
-
+        
   roles:
     - role: RHEL7-STIG
       rhel7stig_system_is_container: yes
