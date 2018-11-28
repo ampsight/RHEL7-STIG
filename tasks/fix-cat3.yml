@@ -162,6 +162,8 @@
   tags:
       - RHEL-07-021620
 
+
+
 - name: "LOW | RHEL-07-040000 | PATCH | The operating system must limit the number of concurrent sessions to 10 for all accounts and/or account types."
   lineinfile:
       state: present
