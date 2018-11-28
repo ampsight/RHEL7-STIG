@@ -2163,13 +2163,14 @@
       - chronyd
 
 - name: "MEDIUM | RHEL-07-040510 | PATCH | The operating system must protect against or limit the effects of Denial of Service (DoS) attacks by validating the operating system is implementing rate-limiting measures on impacted network interfaces."
-  command: "true"
-  changed_when: no
+  copy:
+    dest: "/etc/sysctl.d/stig-RHEL-07-040510-remediation.conf"
+    content: |
+      net.ipv4.tcp_invalid_ratelimit = 500
   when: rhel_07_040510
   tags:
       - RHEL-07-040510
       - firewall
-      - notimplemented
 
 - name: "MEDIUM | RHEL-07-040520 | PATCH | The operating system must enable an application firewall, if available."
   yum:
