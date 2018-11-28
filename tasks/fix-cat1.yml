@@ -390,6 +390,15 @@
       - RHEL-07-030000
       - auditd
 
+- name: "HIGH | RHEL-07-030200 | PATCH | The Red Hat Enterprise Linux operating system must be configured to use the au-remote plugin."
+  replace:
+      path: /etc/audisp/plugins.d/au-remote.conf
+      regexp: '(\s*)active(\s*)=(\s*)no(\s*)$'
+      replace: '\1active\2=\3yes'
+  when: rhel_07_030200
+  tags:
+      - RHEL-07-030200
+
 - block:
       - name: "HIGH | RHEL-07-032000 | PATCH | The system must use a DoD-approved virus scan program."
         yum:
