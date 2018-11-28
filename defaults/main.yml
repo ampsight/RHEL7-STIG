@@ -59,6 +59,7 @@ rhel_07_020310: true
 rhel_07_021350: true
 rhel_07_021710: true
 rhel_07_030000: true
+rhel_07_030200: true
 rhel_07_032000: false #Addresed by Infrastructure
 rhel_07_040390: true
 rhel_07_040540: true
