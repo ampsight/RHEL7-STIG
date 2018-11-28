@@ -8,7 +8,9 @@
       owner: root
       group: root
       mode: 0600
-      line: "{{ item.trivial | default(false) | ternary(trivial_audit, normal_audit) }}"
+      #line: "{{ item.trivial | default(false) | ternary(trivial_audit, normal_audit) }}"
+      line:"{{ item.trivial | default(false) | ternary(trivial_audit, normal_audit) }}\r\n-w /usr/bin/kmod -p x -F auid!=4294967295 -k module-change"
+
       state: "{{ audit_present | ternary('present', 'absent') }}"
   vars:
       trivial_audit: "-w {{ item.path }} -p x {{ rhel7stig_workaround_for_ssg_benchmark | ternary('', '-F auid!=4294967295 ') }}-k {{ item.key }}"
