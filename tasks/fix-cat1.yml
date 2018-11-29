@@ -399,6 +399,15 @@
   tags:
       - RHEL-07-030200
 
+- name: "HIGH | RHEL-07-030210 | FILE_CONTENT_CHECK | RHEL-07-030210 - The Red Hat Enterprise Linux operating system must take appropriate action when the audisp-remote buffer is full."
+  lineinfile:
+      path: /etc/audisp/audispd.conf
+      regexp: '(\s*)overflow_action(\s*)=(\s*).*$'
+      line: 'overflow_action = syslog'
+  when: rhel_07_030210
+  tags:
+      - RHEL-07-030210
+
 - block:
       - name: "HIGH | RHEL-07-032000 | PATCH | The system must use a DoD-approved virus scan program."
         yum:
