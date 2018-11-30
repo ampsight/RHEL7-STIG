@@ -1561,7 +1561,7 @@
       - id: "030630"
         path: "/usr/bin/passwd"
         key: "privileged-passwd"
-        no_perm_x_filter: true
+        no_perm_x_filter: false
       - id: "030640"
         path: "/usr/sbin/unix_chkpwd"
         key: "privileged-passwd"
