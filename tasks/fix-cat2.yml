@@ -1577,7 +1577,7 @@
       - id: "030670"
         path: "/usr/sbin/userhelper"
         key: "privileged-passwd"
-        no_perm_x_filter: true
+        no_perm_x_filter: false
       - id: "030680"
         path: "/usr/bin/su"
         key: "privileged-priv_change"
