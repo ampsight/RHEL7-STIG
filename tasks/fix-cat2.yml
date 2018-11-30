@@ -1569,7 +1569,7 @@
       - id: "030650"
         path: "/usr/bin/gpasswd"
         key: "privileged-passwd"
-        no_perm_x_filter: true
+        no_perm_x_filter: false
       - id: "030660"
         path: "/usr/bin/chage"
         key: "privileged-passwd"
