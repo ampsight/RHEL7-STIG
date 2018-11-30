@@ -1573,7 +1573,7 @@
       - id: "030660"
         path: "/usr/bin/chage"
         key: "privileged-passwd"
-        no_perm_x_filter: true
+        no_perm_x_filter: false
       - id: "030670"
         path: "/usr/sbin/userhelper"
         key: "privileged-passwd"
