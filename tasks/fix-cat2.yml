@@ -2187,7 +2187,7 @@
 - name: "MEDIUM | RHEL-07-040520 | PATCH | The system must use a local firewall."
   service:
       name: "{{ rhel7stig_firewall_service }}"
-      state: "{{ rhel7stig_service_started }}"
+      state: restarted
       enabled: yes
   when:
       - rhel_07_040520
