@@ -2180,6 +2180,9 @@
   tags:
       - RHEL-07-040520
       - firewall
+      
+- name: "MEDIUM | RHEL-07-040520 | PATCH | The firewalld service must be unmasked."
+  command: "systemctl unmask --now {{ rhel7stig_firewall_service }}"
 
 - name: "MEDIUM | RHEL-07-040520 | PATCH | The system must use a local firewall."
   service:
