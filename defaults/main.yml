@@ -248,21 +248,21 @@ rhel_07_040460: true
 rhel_07_040470: true
 rhel_07_040500: false #Addressed by infrastructure
 rhel_07_040510: true
-rhel_07_040520: false #Addressed by infrastructure
+rhel_07_040520: true
 rhel_07_040610: true
 rhel_07_040620: true
 rhel_07_040630: true
-rhel_07_040640: false #Exception
+rhel_07_040640: true
 rhel_07_040641: true
 rhel_07_040650: true
-rhel_07_040660: false #Exception
+rhel_07_040660: true
 rhel_07_040670: true
 rhel_07_040680: true
 rhel_07_040720: true
 rhel_07_040730: true
 rhel_07_040740: false #Exception
 rhel_07_040750: true
-rhel_07_040810: false #Addressed by infrastructure
+rhel_07_040810: true
 rhel_07_040820: false #Exception
 rhel_07_040830: true
 rhel_07_041001: true
