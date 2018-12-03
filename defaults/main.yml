@@ -254,7 +254,7 @@ rhel_07_040620: true
 rhel_07_040630: true
 rhel_07_040640: false #Exception
 rhel_07_040641: true
-rhel_07_040650: false #Exception
+rhel_07_040650: true
 rhel_07_040660: false #Exception
 rhel_07_040670: true
 rhel_07_040680: true
