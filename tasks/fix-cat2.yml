@@ -1680,7 +1680,7 @@
         no_perm_x_filter: true
       - id: "030840"
         path: "/usr/bin/kmod"
-        trivial: no
+        trivial: yes
         key: "module-change"
         no_perm_x_filter: true
   tags:
