@@ -1450,8 +1450,8 @@
             state: present
 
       - name: "MEDIUM | RHEL-07-030360 | Regenerate audit.rules file."
-        cmd: /sbin/augenrules
-        
+        command: /sbin/augenrules
+
   when: rhel_07_030360
   tags:
       - RHEL-07-030360
