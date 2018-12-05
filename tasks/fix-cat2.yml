@@ -774,6 +774,7 @@
         user:
             name: "{{ item }}"
             state: absent
+            force: yes
             remove: "{{ rhel7stig_remove_unnecessary_user_files }}"
         register: rhel_07_020270_patch
         with_items: "{{ rhel7stig_unnecessary_accounts }}"
@@ -2180,7 +2181,7 @@
   tags:
       - RHEL-07-040520
       - firewall
-      
+
 - name: "MEDIUM | RHEL-07-040520 | PATCH | The firewalld service must be unmasked."
   command: "systemctl unmask --now {{ rhel7stig_firewall_service }}"
 
