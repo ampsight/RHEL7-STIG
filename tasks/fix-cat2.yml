@@ -774,6 +774,7 @@
         user:
             name: "{{ item }}"
             state: absent
+            force: yes
             remove: "{{ rhel7stig_remove_unnecessary_user_files }}"
         register: rhel_07_020270_patch
         with_items: "{{ rhel7stig_unnecessary_accounts }}"
