@@ -114,21 +114,55 @@
       - mount
       - tmp
 
-- name: "LOW | RHEL-07-021600 | PATCH | The file integrity tool must be configured to verify Access Control Lists (ACLs)."
-  command: "true"
-  changed_when: no
+- block:
+      - name: "LOW | RHEL-07-021600 | PATCH | The file integrity tool must be configured to verify Access Control Lists (ACLs).  Gather offending lines"
+        shell: |
+          /usr/bin/awk '/^[^#]+=/ { split($0, p, "="); gsub(/ /, "", p[1]); gsub(/ /, "", p[2]); r[p[1]] = p[2]; } /^[^#=!@]/ && !/=/ { x=$2; for (v in r) { c = sprintf("(^|+| )%s(+| |$)", v); gsub(c, r[v], x); } if ($0) { if (x !~ /acl/) { print $1; f++ } } }' /etc/aide.conf
+        register: rhel_07_021600_audit
+
+      - name: "LOW | RHEL-07-021600 | PATCH | The file integrity tool must be configured to verify Access Control Lists (ACLs).  Change to acl verify"
+        replace:
+          path: /etc/aide.conf
+          regexp: ^({{ item | regex_escape() }})(\s+)(.*)
+          replace: '\1\2\3+acl'
+        with_items: "{{ rhel_07_021600_audit.stdout_lines }}"
   when: rhel_07_021600
   tags:
       - RHEL-07-021600
-      - notimplemented
 
-- name: "LOW | RHEL-07-021610 | PATCH | The file integrity tool must be configured to verify extended attributes."
-  command: "true"
-  changed_when: no
+- block:
+      - name: "LOW | RHEL-07-021610 | PATCH | The file integrity tool must be configured to verify extended attributes.  Gather offending lines"
+        shell: |
+          /usr/bin/awk '/^[^#]+=/ { split($0, p, "="); gsub(/ /, "", p[1]); gsub(/ /, "", p[2]); r[p[1]] = p[2]; } /^[^#=!@]/ && !/=/ { x=$2; for (v in r) { c = sprintf("(^|+| )%s(+| |$)", v); gsub(c, r[v], x); } if ($0) { if (x !~ /xattrs/) { print $1; f++ } } }' /etc/aide.conf
+        register: rhel_07_021610_audit
+
+      - name: "LOW | RHEL-07-021610 | PATCH | The file integrity tool must be configured to verify extended attributes.  Change to xattrs verify"
+        replace:
+          path: /etc/aide.conf
+          regexp: ^({{ item | regex_escape() }})(\s+)(.*)
+          replace: '\1\2\3+xattrs'
+        with_items: "{{ rhel_07_021610_audit.stdout_lines }}"
   when: rhel_07_021610
   tags:
       - RHEL-07-021610
-      - notimplemented
+
+- block:
+      - name: "LOW | RHEL-07-021620 | PATCH | Configure the file integrity tool to use FIPS 140-2 cryptographic hashes for validating file and directory contents.  Gather offending lines"
+        shell: |
+          /usr/bin/awk '/^[^#]+=/ { split($0, p, "="); gsub(/ /, "", p[1]); gsub(/ /, "", p[2]); r[p[1]] = p[2]; } /^[^#=!@]/ && !/=/ { x=$2; for (v in r) { c = sprintf("(^|+| )%s(+| |$)", v); gsub(c, r[v], x); } if ($0) { if (x !~ /sha512/) { print $1; f++ } } } END { if (f) { print "fail" } else { print "pass" } }' /etc/aide.conf
+        register: rhel_07_021620_audit
+
+      - name: "LOW | RHEL-07-021620 | PATCH | Configure the file integrity tool to use FIPS 140-2 cryptographic hashes for validating file and directory contents.  Change to sha512 verify"
+        replace:
+          path: /etc/aide.conf
+          regexp: ^({{ item | regex_escape() }})(\s+)(.*)
+          replace: '\1\2\3+sha512'
+        with_items: "{{ rhel_07_021620_audit.stdout_lines }}"
+  when: rhel_07_021620
+  tags:
+      - RHEL-07-021620
+
+
 
 - name: "LOW | RHEL-07-040000 | PATCH | The operating system must limit the number of concurrent sessions to 10 for all accounts and/or account types."
   lineinfile:
