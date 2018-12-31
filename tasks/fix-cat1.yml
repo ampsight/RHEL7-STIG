@@ -1,5 +1,6 @@
 ---
-- block:
+- name: "HIGH | RHEL-07-010010 | The file permissions, ownership, and group membership of system files and commands must match the vendor values."
+  block:
       - name: "HIGH | RHEL-07-010010 | AUDIT | The file permissions, ownership, and group membership of system files and commands must match the vendor values."
         shell: |
             rpm -Va --nolinkto --nofiledigest --nosize --nomtime --nodigest --nosignature | grep -E '^(.M|.....U|......G)' | tee /dev/stderr | cut -c13- | sed 's/^ //' | xargs rpm -qf --qf='%{name}\n' | sort -u
@@ -41,7 +42,8 @@
   tags:
       - RHEL-07-010010
 
-- block:
+- name: "HIGH | RHEL-07-010020 | The cryptographic hash of system files and commands must match vendor values."
+  block:
       - name: "HIGH | RHEL-07-010020 | AUDIT | The cryptographic hash of system files and commands must match vendor values."
         shell: 'rpm -Va --nolinkto --nosize --nouser --nogroup --nomtime --nomode --nodigest --nosignature | grep ''^..5'' | grep -E ''/(.?bin|libexec)/'' | tee /dev/stderr | cut -c13- | sed ''s/^ //'' | xargs rpm -qf --qf=''%{name}\n'' | sort -u'
         args:
@@ -122,7 +124,6 @@
 
 
 - name: |
-
       "HIGH | RHEL-07-010480 | PATCH | Systems with a Basic Input/Output System (BIOS) must require authentication upon booting into single-user and maintenance modes."
       "HIGH | RHEL-07-010490 | PATCH | Systems using Unified Extensible Firmware Interface (UEFI) must require authentication upon booting into single-user and maintenance modes."
   lineinfile:
@@ -236,7 +237,8 @@
       - RHEL-07-020250
       - complexity-high
 
-- block:
+- name: "HIGH | RHEL-07-020310 | The root account must be the only account having unrestricted access to the system"
+  block:
       # Currently just locks user account
       - name: "HIGH | RHEL-07-020310 | AUDIT | The root account must be the only account having unrestricted access to the system"
         shell: "cat /etc/passwd | awk -F: '($3 == 0 && $1 != \"root\") {i++;print $1 } END {exit i}'"
@@ -253,7 +255,8 @@
   tags:
       - RHEL-07-020310
 
-- block:
+- name: "HIGH | RHEL-07-021350 | The operating system must implement NIST FIPS-validated cryptography for the following: to provision digital signatures, to generate cryptographic hashes, and to protect unclassified information requiring confidentiality and cryptographic protection in accordance with applicable federal laws, Executive Orders, directives, policies, regulations, and standards."
+  block:
       - name: "HIGH | RHEL-07-021350 | PATCH | The operating system must implement NIST FIPS-validated cryptography for the following: to provision digital signatures, to generate cryptographic hashes, and to protect unclassified information requiring confidentiality and cryptographic protection in accordance with applicable federal laws, Executive Orders, directives, policies, regulations, and standards."
         yum:
             name: dracut-fips
@@ -372,7 +375,8 @@
       - RHEL-07-021710
       - telnet
 
-- block:
+- name: "HIGH | RHEL-07-030000 | Auditing must be configured to produce records containing information to establish what type of events occurred, where the events occurred, the source of the events, and the outcome of the events. These audit records must also identify individual identities of group account users."
+  block:
       - name: "HIGH | RHEL-07-030000 | PATCH | Auditing must be configured to produce records containing information to establish what type of events occurred, where the events occurred, the source of the events, and the outcome of the events. These audit records must also identify individual identities of group account users."
         yum:
             name: audit
@@ -442,7 +446,8 @@
       - RHEL-07-040390
       - ssh
 
-- block:
+- name: "HIGH | RHEL-07-040540 | There must be no .shosts files on the system."
+  block:
       - name: "HIGH | RHEL-07-040540 | AUDIT | There must be no .shosts files on the system."
         command: find {{ rhel7stig_local_mounts | join(' ') }} -xdev -name '.shosts'
         check_mode: no
@@ -459,7 +464,8 @@
       - RHEL-07-040540
       - shosts
 
-- block:
+- name: "HIGH | RHEL-07-040550 | There must be no shosts.equiv files on the system."
+  block:
       - name: "HIGH | RHEL-07-040550 | AUDIT | There must be no shosts.equiv files on the system."
         command: find {{ rhel7stig_local_mounts | join(' ') }} -xdev -name 'shosts.equiv'
         check_mode: no
@@ -515,8 +521,9 @@
       - RHEL-07-040710
       - ssh
 
-- block:
-      - name: "PRELIM | RHEL-07-040800 | AUDIT | SNMP community strings must be changed from the default."
+- name: "HIGH | RHEL-07-040800 | SNMP community strings must be changed from the default."
+  block:
+      - name: "HIGH | RHEL-07-040800 | AUDIT | SNMP community strings must be changed from the default."
         command: grep {{ item }} /etc/snmp/snmpd.conf
         check_mode: no
         failed_when: no
